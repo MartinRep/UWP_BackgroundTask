@@ -25,16 +25,23 @@ namespace BackgroundTaskDemo
         private async void button_Click(object sender, RoutedEventArgs e)
         {
             var access = await BackgroundExecutionManager.RequestAccessAsync();
-
-            switch (access)
+                switch (access)
             {
                 case BackgroundAccessStatus.Unspecified:
                     break;
-                case BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity:
-                    break;
                 case BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity:
                     break;
+                case BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity:
+                    break;
                 case BackgroundAccessStatus.Denied:
+                    break;
+                case BackgroundAccessStatus.AlwaysAllowed:
+                    break;
+                case BackgroundAccessStatus.AllowedSubjectToSystemPolicy:
+                    break;
+                case BackgroundAccessStatus.DeniedBySystemPolicy:
+                    break;
+                case BackgroundAccessStatus.DeniedByUser:
                     break;
                 default:
                     break;
