@@ -1,33 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Background;
+﻿using Windows.ApplicationModel.Background;
+using Windows.UI.Notifications;
 
 namespace BackgroundComponent
 {
     public sealed class Class1 : IBackgroundTask
     {
-        public async void Run(IBackgroundTaskInstance taskInstance)
+        public void Run(IBackgroundTaskInstance taskInstance)
         {
-            var access = await BackgroundExecutionManager.RequestAccessAsync();
-
-            switch (access)
-            {
-
-                case BackgroundAccessStatus.Unspecified:
-                    break;
-                case BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity:
-                    break;
-                case BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity:
-                    break;
-                case BackgroundAccessStatus.Denied:
-                    break;
-                default:
-                    break;
-            }
-
-            }
+            SendToast("Background task active");
         }
+
+        public static void SendToast(string message)
+        {
+            var template = ToastTemplateType.ToastText01;
+            var xml = ToastNotificationManager.GetTemplateContent(template);
+            var elements = xml.GetElementsByTagName("Test");
+            var text = xml.CreateTextNode(message);
+
+            elements[0].AppendChild(text);
+            var toast = new ToastNotification(xml);
+            ToastNotificationManager.CreateToastNotifier().Show(toast);
+        }
+
+
+    }
 }
